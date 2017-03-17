@@ -21,7 +21,7 @@ router.get('/', function(req, res) {
 
 
 //register routes
-app.use('/api', router);
+app.use('/', router);
 
 //start server
 app.listen(port);
