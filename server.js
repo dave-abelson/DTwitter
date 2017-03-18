@@ -3,9 +3,11 @@
 var express 	= require('express');
 var app		= express();
 var bodyParser 	= require('body-parser');
+var path 	= require('path');
 
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
+app.use(express.static(__dirname + /client/));
 
 var port = process.env.PORT || 8080;
 
@@ -19,10 +21,16 @@ router.use(function(req, res, next) {
 });
 
 router.get('/', function(req, res) {
-	res.json({message: 'Hooray! welcome to our api!'});
+	res.sendFile(path.join(__dirname + '/client/index.html'));
 });
 
 //add more routes here
+
+router.post('/adduser', function(req, res) {
+	res.json({message: 'Add user'});
+});
+
+	
 
 
 //register routes
