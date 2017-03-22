@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+        <title>DTwitter</title>
+	<meta charset="utf-8">
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0/angular.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0/angular-route.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0/angular-resource.js"></script>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+        <link rel="stylesheet" href="stylesheets/style.css">
+        <script type="text/javascript" src="dtwitterApp.js"></script>
+	<base href="/">
+</head>
+<body ng-app="dtwitterApp">
+        <div id='main' class="container">
+                <nav class="navbar-fluid navbar-default navbar-fixed -top">
+                        <div class="container">
+                                <a class="navbar-brand" href="#">Dumb Twitter! </a>
+                                <p class="navbar-text"> Just like the real one!</p>
+                                <p class="navbar-right navbar-text"><a href="/login">Login</a> <a href="/adduser">Register</a>
+                        </div>
+                </nav>
+                <div class="col-md-offset-2 col-md-8">
+                        <div ng-view>
+                        </div>
+                </div>
+        </div>
+</body>
+</html>
