@@ -57,12 +57,6 @@ initPassport(passport);
 
 //add more routes here
 
-router.post('/adduser', function(req, res) {
-	res.json({message: 'Add user'});
-});
-
-	
-
 
 //register routes
 //app.use('/', router);
