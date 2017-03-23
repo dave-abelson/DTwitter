@@ -1,11 +1,13 @@
-
 {
-	"name": "node-api",
-	"main": "server.js",
-	"dependencies": {
-		"express": "*",
-		"mongoose": "*",
-		"body-parser": "*"
-	}
-
+  "name": "node-api",
+  "main": "server.js",
+  "dependencies": {
+    "bcrypt-nodejs": "0.0.3",
+    "body-parser": "*",
+    "express": "*",
+    "express-session": "^1.15.1",
+    "mongoose": "*",
+    "passport": "^0.3.2",
+    "passport-local": "^1.0.0"
+  }
 }
