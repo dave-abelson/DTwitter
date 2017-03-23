@@ -1,7 +1,12 @@
 var app = angular.module('dtwitterApp', ['ngRoute', 'ngResource']).run(function($rootScope) {
 	$rootScope.authenticated = false;
 	$rootScope.current_user = '';
-	
+
+	$rootScope.logout = function(){
+    	$http.get('auth/logout');
+    	$rootScope.authenticated = false;
+    	$rootScope.current_user = '';
+	};	
 });
 
 app.config(function($routeProvider, $locationProvider){
@@ -37,7 +42,7 @@ app.controller('mainController', function(postService, $scope, $rootScope){
 });
 
 app.controller('authController', function($scope, $http, $rootScope, $location){
-	$scope.user = {username: '', password: ''};
+	$scope.user = {username: '', password: '', email: ''};
 	$scope.error_message = '';
 	
 	$scope.login = function(){
