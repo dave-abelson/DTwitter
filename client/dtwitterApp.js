@@ -32,7 +32,7 @@ app.config(function($routeProvider, $locationProvider){
 });	
 
 app.factory('postService', function($resource){
-	return $resource('/api/item/:id');
+	return $resource('/api/posts/:id');
 
 });
 
@@ -45,7 +45,7 @@ app.controller('mainController', function(postService, $scope, $rootScope){
 	  $scope.newPost.timestamp = Date.now();
 	  postService.save($scope.newPost, function(){
 	    $scope.posts = postService.query();
-	    $scope.newPost = {created_by: '', text: '', created_at: ''};
+	    $scope.newPost = {id: '', username: '', content: '', timestamp: ''};
 	  });
 	};
 });

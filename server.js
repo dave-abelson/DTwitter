@@ -17,6 +17,7 @@ mongoose.connect('mongodb://localhost/dtwitter');
 
 var index       = require('./routes/index');
 var authenticate= require('./routes/authenticate')(passport);
+var api		= require('./routes/api');
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
@@ -37,6 +38,7 @@ app.use(passport.session());
 
 app.use('/', index);
 app.use('/auth', authenticate);
+app.use('/api', api);
 
 var port = process.env.PORT || 8080;
 
