@@ -4,6 +4,7 @@
   "dependencies": {
     "bcrypt-nodejs": "0.0.3",
     "body-parser": "*",
+    "cookie-parser": "^1.4.3",
     "express": "*",
     "express-session": "^1.15.1",
     "mongoose": "*",

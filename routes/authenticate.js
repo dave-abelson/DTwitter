@@ -5,16 +5,13 @@ module.exports = function(passport){
 
 	//sends successful login state back to angular
 	router.get('/success', function(req, res){
-		res.write({status: 'OK'});
-		res.write({user: req.user ? req.user : null});
-		res.end();
+		console.log("route " + req.user);
+		res.send({status: 'OK', user: req.user ? req.user: null});
 	});
 
 	//sends failure login state back to angular
 	router.get('/failure', function(req, res){
-		res.write({status: 'error', error: "Invalid username or password"});
-		res.write({user: null});
-		res.end();
+		res.send({status: 'error', error: 'Invalid username or password', user: null});
 	});
 
 	//log in
@@ -27,6 +24,12 @@ module.exports = function(passport){
 	router.post('/adduser', passport.authenticate('adduser', {
 		successRedirect: '/auth/success',
 		failureRedirect: '/auth/failure'
+	}));
+	
+	//verify
+	router.post('/verify', passport.authenticate('verify', {
+		successRedirect: '/auth/success',
+                failureRedirect: '/auth/failure'
 	}));
 
 	//log out

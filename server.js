@@ -8,6 +8,7 @@ var path 	= require('path');
 var logger	= require('morgan');
 var session	= require('express-session');
 var passport	= require('passport');
+var cookieParser = require('cookie-parser');
 
 require('./models/models');
 var mongoose	= require('mongoose');
@@ -19,12 +20,10 @@ var authenticate= require('./routes/authenticate')(passport);
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
-
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 app.use(express.static(__dirname + /client/));
-app.use(passport.initialize());
-app.use(passport.session());
+app.use(cookieParser());
 
 app.use(logger('dev'));
 app.use(session({
@@ -32,6 +31,9 @@ app.use(session({
 	resave: true,
         saveUninitialized: true
 }));
+
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.use('/', index);
 app.use('/auth', authenticate);
@@ -57,6 +59,29 @@ initPassport(passport);
 
 //add more routes here
 
+app.post('/adduser', function(req, res, next){
+	res.send({status: 'OK'});
+});
+
+app.post('/login', function(req, res, next){
+        res.send({status: 'OK'});
+});
+
+app.post('/logout', function(req, res, next){
+        res.send({status: 'OK'});
+});
+
+app.post('/verify', function(req, res, next){
+        res.send({status: 'OK'});
+});
+
+app.post('/additem', function(req, res, next){
+        res.send({status: 'OK'});
+});
+
+app.post('/item/<id>', function(req, res, next){
+        res.send({status: 'OK'});
+});
 
 //register routes
 //app.use('/', router);

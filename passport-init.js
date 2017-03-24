@@ -33,6 +33,7 @@ module.exports = function(passport){
 						console.log('invalid password');
 						return done(null, false);
 					}
+					console.log("LOG: "+ user);
 					return done(null, user);
 				}
 			);
