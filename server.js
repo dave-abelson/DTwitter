@@ -14,7 +14,6 @@ require('./models/models');
 var mongoose	= require('mongoose');
 mongoose.connect('mongodb://localhost/dtwitter');
 
-
 var index       = require('./routes/index');
 var authenticate= require('./routes/authenticate')(passport);
 var api		= require('./routes/api');
@@ -30,7 +29,8 @@ app.use(logger('dev'));
 app.use(session({
 	secret: 'keyboard cat',
 	resave: true,
-        saveUninitialized: true
+        saveUninitialized: true,
+	cookie: { maxAge : 3600000 }
 }));
 
 app.use(passport.initialize());
@@ -62,29 +62,32 @@ initPassport(passport);
 //add more routes here
 
 app.post('/adduser', function(req, res, next){
-	res.send({status: 'OK'});
+	res.redirect(307, '/auth/adduser');
 });
 
 app.post('/login', function(req, res, next){
-        res.send({status: 'OK'});
+	res.redirect(307, '/auth/login');
 });
 
 app.post('/logout', function(req, res, next){
-        res.send({status: 'OK'});
+	res.redirect(307, '/auth/logout');
 });
 
 app.post('/verify', function(req, res, next){
-        res.send({status: 'OK'});
+	res.send({status: 'OK'});
 });
 
 app.post('/additem', function(req, res, next){
-        res.send({status: 'OK'});
+	res.redirect(307, '/api/posts');
 });
 
-app.post('/item/<id>', function(req, res, next){
-        res.send({status: 'OK'});
+app.get('/item/:id', function(req, res, next){
+	res.redirect('/api/posts/' + req.params.id);
 });
 
+app.post('/search', function(req, res, next){
+	res.redirect(307, '/api/search');
+});
 //register routes
 //app.use('/', router);
 

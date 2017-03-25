@@ -25,13 +25,13 @@ module.exports = function(passport){
 		successRedirect: '/auth/success',
 		failureRedirect: '/auth/failure'
 	}));
-	
+/*	
 	//verify
 	router.post('/verify', passport.authenticate('verify', {
 		successRedirect: '/auth/success',
                 failureRedirect: '/auth/failure'
 	}));
-
+*/
 	//log out
 	router.get('/logout', function(req, res) {
 		req.logout();
