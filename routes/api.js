@@ -91,8 +91,8 @@ router.route('/search')
 		}
 		var time = new Date(req.body.timestamp);
 		Post
-		//.find({'timestamp': {'$lte': time}})
-		.find()
+		.find({'timestamp': {'$lte': time}})
+		//.find()
 		.sort({date: -1})
 		.limit(limit)
 		.exec(function(err, posts){
