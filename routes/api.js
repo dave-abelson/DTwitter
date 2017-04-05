@@ -77,9 +77,9 @@ router.route('/posts/:id')
 			id: req.params.id
 		}, function(err) {
 			if(err){
-				res.send(err);
+				res.send({status: 'error'});
 			}
-			res.json("deleted :(");
+			res.send({status: 'OK'});
 		});
 	});
 

@@ -85,6 +85,10 @@ app.get('/item/:id', function(req, res, next){
 	res.redirect('/api/posts/' + req.params.id);
 });
 
+app.delete('/item/:id', function(req, res, next){
+	res.redirect(307, '/api/posts/' + req.params.id);
+});
+
 app.post('/search', function(req, res, next){
 	res.redirect(307, '/api/search');
 });
