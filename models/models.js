@@ -13,6 +13,8 @@ var userSchema = new mongoose.Schema({
 	username: String,
 	password: String, 
 	email: String,
+	followers: [],
+	following: [],
 	created_at: {type: Date, default: Date.now}
 })
 
