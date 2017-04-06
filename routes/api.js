@@ -2,21 +2,26 @@ var express 	= require('express');
 var router 	= express.Router();
 var mongoose	= require('mongoose');
 var Post	= mongoose.model('Post');
+var User	= mongoose.model('User');
 
 var currentuser;
 
 function isAuthenticated(req, res, next){
 	currentuser = req.user;
-	if (req.method === "GET"){
+	if (req.method == "GET"){
 		return next();
 	}
 	if (req.isAuthenticated()){
 		return next();
 	}
-	return res.redirect('/login');
+	if (req.method == 'DELETE'){
+		return next();
+	}
+	return res.redirect(307, '/login');
 };
 
 router.use('/posts', isAuthenticated);
+router.use('/follow', isAuthenticated);
 
 router.route('/posts')
 	.post(function(req, res){
@@ -81,6 +86,45 @@ router.route('/posts/:id')
 			}
 			res.send({status: 'OK'});
 		});
+	});
+
+router.route('/user/:username')
+	.get(function(req, res){
+		User.findOne({username: req.params.username}, function(err, user){
+			if (err){
+				res.send({status: 'error', message: err});
+			}
+			res.send({status: 'OK', user: {email: user.email, followers: user.followers.length, following: user.following.length}});
+		});
+	});
+
+router.route('/follow')
+	.post(function(req, res){
+		if (req.body.follow == 'false'){
+			bool = false;
+		}else{
+			bool = true;
+		}
+
+		User.findOne({username: req.body.username}, function(err, user){
+			if(err){
+				res.send({status: 'error', message: err});
+			}
+			if(bool == true){
+				user.followers.push(currentuser.username);
+			}else{
+				var index = user.followers.indexOf();
+				user.followers.splice();
+			}
+						
+		});
+
+		User.findOne({username: currentuser.username}, function(err, user){
+			if(err){
+                                res.send({status: 'error', message: err});
+                        }
+                });	
+		res.send({status: 'OK'});
 	});
 
 router.route('/search')

@@ -62,6 +62,7 @@ initPassport(passport);
 //add more routes here
 
 app.post('/adduser', function(req, res, next){
+	console.log('APP REQ: ' + req.body.email);
 	res.redirect(307, '/auth/adduser');
 });
 
@@ -92,6 +93,15 @@ app.delete('/item/:id', function(req, res, next){
 app.post('/search', function(req, res, next){
 	res.redirect(307, '/api/search');
 });
+
+app.get('/user/:username', function(req, res, next){
+	res.redirect('/api/user/' + req.params.username);
+});
+
+app.post('/follow', function(req, res, next){
+	res.redirect(307, '/api/follow');
+});
+
 //register routes
 //app.use('/', router);
 
