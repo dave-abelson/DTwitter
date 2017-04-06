@@ -113,9 +113,14 @@ router.route('/follow')
 			if(bool == true){
 				user.followers.push(currentuser.username);
 			}else{
-				var index = user.followers.indexOf();
-				user.followers.splice();
+				var index = user.followers.indexOf(currentuser.username);
+				user.followers.splice(index, 1);
 			}
+			user.save(function (err) {
+       				if(err) {
+            				console.error('ERROR!');
+        			}
+   			});
 						
 		});
 
@@ -123,6 +128,17 @@ router.route('/follow')
 			if(err){
                                 res.send({status: 'error', message: err});
                         }
+			if(bool == true){
+                                user.following.push(req.body.username);
+                        }else{
+                                var index = user.following.indexOf(req.body.username);
+                                user.following.splice(index, 1);
+                        }
+			user.save(function (err) {
+                                if(err) {
+                                        console.error('ERROR!');
+                                }
+                        });
                 });	
 		res.send({status: 'OK'});
 	});
