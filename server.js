@@ -98,6 +98,31 @@ app.get('/user/:username', function(req, res, next){
 	res.redirect('/api/user/' + req.params.username);
 });
 
+app.get('/user/:username/followers', function(req, res, next){
+	if(req.query.limit == undefined){
+		var limit = 50;
+	}else{	
+		var limit = req.query.limit;
+		if(limit > 200){
+                        limit = 200;
+                }
+	}
+	//var limit = req.query.limit;
+	res.redirect('/api/user/'+ req.params.username +'/followers/' + limit);
+});
+
+app.get('/user/:username/following', function(req, res, next){
+	if(req.query.limit == undefined){
+                var limit = 50;
+        }else{
+                var limit = req.query.limit;
+		if(limit > 200){
+			limit = 200;
+		}
+        }
+        res.redirect('/api/user/'+ req.params.username +'/following/' + limit);
+});
+
 app.post('/follow', function(req, res, next){
 	res.redirect(307, '/api/follow');
 });

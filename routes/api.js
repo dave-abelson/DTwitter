@@ -3,6 +3,7 @@ var router 	= express.Router();
 var mongoose	= require('mongoose');
 var Post	= mongoose.model('Post');
 var User	= mongoose.model('User');
+var url		= require('url');
 
 var currentuser;
 
@@ -98,6 +99,27 @@ router.route('/user/:username')
 		});
 	});
 
+router.route('/user/:username/followers/:limit')
+	.get(function(req, res){
+		User.findOne({username: req.params.username}, function(err, user){
+			if(err){
+				res.send({status: 'error', message: err});
+			}
+			res.send({status: 'OK', users: user.followers.slice(0,req.params.limit)})
+		});
+	});
+
+router.route('/user/:username/following/:limit')
+	.get(function(req, res){
+		User.findOne({username: req.params.username}, function(err, user){                              
+                        if(err){
+                                res.send({status: 'error', message: err});
+                        }   
+                        res.send({status: 'OK', users: user.following.slice(0,req.params.limit)})
+                });
+
+        }); 
+
 router.route('/follow')
 	.post(function(req, res){
 		if (req.body.follow == 'false'){
@@ -145,6 +167,26 @@ router.route('/follow')
 
 router.route('/search')
 	.post(function(req, res){
+		if(req.body.timstamp == undefined){
+			var timestamp = Date.now();
+		}else{
+			var timestamp = req.body.timestamp;
+		}
+
+		if(req.body.limit == undefined){
+			var limit = 25;
+		}else{
+			if(req.body.limit > 100){
+				var limit = 100
+			}else{
+				var limit = req.body.limit;
+			}	
+			
+		}
+
+		
+			
+		/*
 		var limit = 25;
 		if (req.body.limit != null && req.body.limit <= 100){
 			limit = req.body.limit;	
@@ -162,7 +204,7 @@ router.route('/search')
                         	res.send({status: 'OK', items: posts});
 			}
                 });
-
+		*/
 		//.find({'timestamp': {$lte: time}})
 		//.sort({'timestamp': -1})
 		//.limit(limit)
