@@ -31,13 +31,12 @@ router.route('/posts')
 		post.username = currentuser.username;
 		post.id = mongoose.Types.ObjectId();
 		post.timestamp = Date.now();
-		post.status = 'OK';
 		console.log('Name ' + post.username);	
 		post.save(function(err, post){
 			if (err){
-				return res.send(500, err);
+				return res.send({status: 'error', message: err});
 			}
-			return res.json(post);
+			return res.send({status: 'OK', id: post.id});
 		});
 	})
 	
@@ -79,11 +78,9 @@ router.route('/posts/:id')
 	})
 
 	.delete(function(req, res){
-		Post.remove({
-			id: req.params.id
-		}, function(err) {
+		Post.findOneAndRemove({id: req.params.id}, function(err){
 			if(err){
-				res.send({status: 'error'});
+				res.send({status: 'error', message: err});
 			}
 			res.send({status: 'OK'});
 		});
@@ -184,7 +181,42 @@ router.route('/search')
 			
 		}
 
-		
+		if(req.body.q != undefined){
+			Post.find({context: {$regex : ".*" + req.body.q + ".*"}},function(err, posts){
+				if(err){
+                                	res.send({status: 'error', message: err});
+                        	}
+				res.send({status: 'OK', items: posts});
+			});
+		}else if(req.body.username != undefined){
+			Post.find({username: req.body.username},function(err, posts){
+                                if(err){
+                                        res.send({status: 'error', message: err});
+                                }
+                                res.send({status: 'OK', items: posts});
+                        });
+		}else if(req.body.following != undefined){
+			var following = [];
+			User.findOne({username: currentuser}, function(err, user){
+				if(err){
+                                        res.send({status: 'error', message: err});
+                                }
+				following = user.following;
+			});
+			Post.find({username: {$in: following}},function(err, posts){
+                                if(err){
+                                        res.send({status: 'error', message: err});
+                                }
+                                res.send({status: 'OK', items: posts});
+                        });
+		}else{
+			Post.find({timestamp: {$lt: timestamp}},function(err, posts){
+                                if(err){
+                                        res.send({status: 'error', message: err});
+                                }
+                                res.send({status: 'OK', items: posts});
+                        });
+		}	
 			
 		/*
 		var limit = 25;
