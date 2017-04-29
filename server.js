@@ -90,6 +90,10 @@ app.delete('/item/:id', function(req, res, next){
 	res.redirect(307, '/api/posts/' + req.params.id);
 });
 
+app.post('/item/:id/like', function(req, res, next){
+	res.redirect(307, '/api/posts/' + req.params.id + '/like')
+});
+
 app.post('/search', function(req, res, next){
 	res.redirect(307, '/api/search');
 });
@@ -127,6 +131,13 @@ app.post('/follow', function(req, res, next){
 	res.redirect(307, '/api/follow');
 });
 
+app.post('/addmedia', function(req, res, next){
+	res.redirect(307, '/api/posts/addmedia');
+});
+
+app.get('/media/:id', function(req, res, next){
+	res.redirect(307, '/api/posts/media/' + req.params.id);
+});
 //register routes
 //app.use('/', router);
 

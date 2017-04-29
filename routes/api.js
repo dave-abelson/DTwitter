@@ -86,6 +86,21 @@ router.route('/posts/:id')
 		});
 	});
 
+router.route('/posts/:id/like')
+	.post(function(req, res){
+
+	});
+
+router.route('/posts/addmedia')
+	.post(function(req, res){
+
+	});
+
+router.route('/posts/media/:id')
+	.get(function(req, res){
+
+	});
+
 router.route('/user/:username')
 	.get(function(req, res){
 		User.findOne({username: req.params.username}, function(err, user){
